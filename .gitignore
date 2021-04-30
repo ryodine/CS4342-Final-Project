@@ -1,0 +1,4 @@
+train_images/
+train.csv
+*.npy
+.DS_Store
