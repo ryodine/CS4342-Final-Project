@@ -123,13 +123,14 @@ plt.imshow(img[...,::-1]),plt.colorbar(),plt.show()
 plt.show()
 """
 
-
-DO_N_IMG = 1000000000
+DO_N_IMG = 1000
 
 imgs = df.sample(n=2)
 print(len(df))
 preproc = np.zeros((len(df), 30, 30))
 labs = np.zeros((len(df),))
+
+"""
 
 for i, im in df.iterrows():
 
@@ -148,11 +149,11 @@ for i, im in df.iterrows():
     # Bitwise-AND mask and original image
     # res = cv2.bitwise_and(img,img, mask= mask)
 
-    hist = cv2.calcHist( [hsv], [0, 1], None, [30, 30], [0, 259, 0, 256] )
+    hist = cv2.calcHist([hsv], [0, 1], None, [30, 30], [0, 259, 0, 256])
     print(i, im.label)
 
-    #plt.imshow(hist)
-    #plt.show()
+    # plt.imshow(hist)
+    # plt.show()
 
     preproc[i] = hist
     labs[i] = im.label
@@ -160,11 +161,7 @@ for i, im in df.iterrows():
     if i > DO_N_IMG:
         break
 
-with open('data.npy', 'wb') as f:
-    np.save(f, preproc)
-
-with open('labels.npy', 'wb') as f:
-    np.save(f, labs)
+"""
 
 """
 for i, im in imgs.iterrows():
@@ -202,3 +199,39 @@ for i, im in imgs.iterrows():
     plt.imshow(hist,interpolation = 'nearest')
     plt.show()
 """
+
+for i, im in df.iterrows():
+
+    img = cv2.imread("train_images/" + im.image_id)
+    diff = np.zeros((len(img), len(img[0]), 3))
+
+    axisInfo = [(1, len(img[0]) - 1, -1), (1, 0, 1), (0, len(img) - 1, -1), (0, 0, 1)]
+    for j in range(3):
+        oneColor = np.array(img[:, :, j]).astype(int)
+        for axisVal, rowCol, leftRight in axisInfo:
+            shift = np.roll(oneColor, leftRight, axis=axisVal)
+            shift = np.abs(oneColor - shift)
+            if axisVal == 1:
+                shift[:, rowCol] = 0
+            else:
+                shift[rowCol] = 0
+            diff[:, :, j] = diff[:, :, j] + shift
+
+    if i == 0:
+        plt.imshow(img)
+        plt.show()
+        plt.imshow(diff)
+        plt.show()
+
+    hist = cv2.calcHist([shift], [0, 1], None, [30, 30], [0, 259, 0, 256])
+    print(i, im.label)
+
+    if i == 3:
+        plt.imshow(hist)
+        plt.show()
+
+with open('data.npy', 'wb') as f:
+    np.save(f, preproc)
+
+with open('labels.npy', 'wb') as f:
+    np.save(f, labs)
