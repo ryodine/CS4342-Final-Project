@@ -1,4 +1,6 @@
 train_images/
+.idea/
+venv/
 train.csv
 *.npy
 .DS_Store
