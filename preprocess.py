@@ -217,18 +217,17 @@ for i, im in df.iterrows():
                 shift[rowCol] = 0
             diff[:, :, j] = diff[:, :, j] + shift
 
-    if i == 0:
-        plt.imshow(img)
-        plt.show()
-        plt.imshow(diff)
-        plt.show()
-
-    hist = cv2.calcHist([shift], [0, 1], None, [30, 30], [0, 256, 0, 256])
+    hist = np.histogram2d(diff[:, :, 0].flatten(), diff[:, :, 1].flatten(), 30, [[0, 256], [0, 256]])
     print(i, im.label)
 
-    if i == 3:
-        plt.imshow(hist)
+    if 5 < i < 10:
+        plt.imshow(hist[0])
         plt.show()
+
+    labs[i] = im.label
+
+    if i > DO_N_IMG:
+        break
 
 with open('data.npy', 'wb') as f:
     np.save(f, preproc)
