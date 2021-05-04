@@ -217,10 +217,15 @@ for i, im in df.iterrows():
                 shift[rowCol] = 0
             diff[:, :, j] = diff[:, :, j] + shift
 
-    hist = np.histogram2d(diff[:, :, 0].flatten(), diff[:, :, 1].flatten(), 30, [[0, 256], [0, 256]])
+    ##hist = np.histogram2d(diff[:, :, 0].flatten(), diff[:, :, 1].flatten(), 30, [[0, 256], [0, 256]])
+    hist = cv2.calcHist([diff.astype(np.uint8)], [0, 1, 2], None, [20, 20, 20], [0, 128, 0, 128, 0, 128])
     print(i, im.label)
 
     if 5 < i < 10:
+        plt.imshow(img[..., ::-1])
+        plt.show()
+        plt.imshow(diff[..., ::-1])
+        plt.show()
         plt.imshow(hist[0])
         plt.show()
 
