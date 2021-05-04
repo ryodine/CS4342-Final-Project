@@ -223,7 +223,7 @@ for i, im in df.iterrows():
         plt.imshow(diff)
         plt.show()
 
-    hist = cv2.calcHist([shift], [0, 1], None, [30, 30], [0, 259, 0, 256])
+    hist = cv2.calcHist([shift], [0, 1], None, [30, 30], [0, 256, 0, 256])
     print(i, im.label)
 
     if i == 3:
