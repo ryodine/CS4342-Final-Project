@@ -128,7 +128,7 @@ DO_N_IMG = 1000000000
 
 imgs = df.sample(n=2)
 print(len(df))
-preproc = np.zeros((len(df), 30, 30))
+preproc = np.zeros((len(df), 30, 30, 3))
 labs = np.zeros((len(df),))
 
 for i, im in df.iterrows():
@@ -136,7 +136,7 @@ for i, im in df.iterrows():
     img = cv2.imread("train_images/" + im.image_id)
 
     # Convert BGR to HSV
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    #hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
     # define range of blue color in HSV
     # lower_blue = np.array([30,50,50])
@@ -148,7 +148,9 @@ for i, im in df.iterrows():
     # Bitwise-AND mask and original image
     # res = cv2.bitwise_and(img,img, mask= mask)
 
-    hist = cv2.calcHist( [hsv], [0, 1], None, [30, 30], [0, 259, 0, 256] )
+    #hist = cv2.calcHist( [hsv], [0, 1], None, [30, 30], [0, 259, 0, 256] )
+    print(img[:,:,0])
+    hist = cv2.calcHist( [img], [0, 1, 2], None, [30, 30, 3], [0, 256, 0, 256, 0, 256] )
     print(i, im.label)
 
     #plt.imshow(hist)
