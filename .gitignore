@@ -4,3 +4,4 @@ venv/
 train.csv
 *.npy
 .DS_Store
+__pycache__/
