@@ -5,3 +5,6 @@ train.csv
 *.npy
 .DS_Store
 __pycache__/
+
+# Ignore the trained model. These files are large and should not go on github
+checkpoint*
