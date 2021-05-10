@@ -39,3 +39,8 @@ def get_model():
     model.load_weights(os.path.dirname(os.path.abspath(__file__))  + '/checkpoint_model')
 
     return model
+
+if __name__ == "__main__":
+    mod = get_model()
+    tf.keras.utils.plot_model(mod, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+    print("saved model image")
