@@ -107,5 +107,3 @@ def minimize(traincsv):
     outfile = "min_balanced_" + traincsv
     getcsv(ids, outfile)
     print(("Distribution for " + outfile + ": "), countlabels(outfile))
-
-balance("train.csv", 5000)
