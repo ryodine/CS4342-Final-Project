@@ -8,11 +8,9 @@ import numpy as np
 #
 ############################################################
 
-def get_data_generators(csv="train.csv", imdir="train_images"):
 
-    df = pd.read_csv(csv).astype(str)
-
-    splits = np.split(df, [6*len(df)//10, 8*len(df)//10])
+def get_data_generators(traincsv="balanced_4000_train.csv", testcsv="TEST_DATA_SPLIT.csv",
+                        validationcsv="VALIDATION_DATA_SPLIT.csv", imdir="train_images"):
 
     batch_size = 16
 
@@ -28,7 +26,7 @@ def get_data_generators(csv="train.csv", imdir="train_images"):
     test_datagen = ImageDataGenerator(rescale=1./255)
 
     train_generator = train_datagen.flow_from_dataframe(
-        splits[0],
+        pd.read_csv(traincsv).astype(str),
         imdir,
         x_col='image_id',
         y_col='label',
@@ -38,7 +36,7 @@ def get_data_generators(csv="train.csv", imdir="train_images"):
         class_mode='categorical')
 
     validation_generator = test_datagen.flow_from_dataframe(
-        splits[1],
+        pd.read_csv(validationcsv).astype(str),
         imdir,
         x_col='image_id',
         y_col='label',
@@ -48,7 +46,7 @@ def get_data_generators(csv="train.csv", imdir="train_images"):
         class_mode='categorical')
 
     test_generator = test_datagen.flow_from_dataframe(
-        splits[2],
+        pd.read_csv(testcsv).astype(str),
         imdir,
         x_col='image_id',
         y_col='label',

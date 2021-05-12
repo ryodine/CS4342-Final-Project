@@ -33,6 +33,8 @@ def get_model():
     model.add(Flatten())
     model.add(Dense(64))
     model.add(Activation('relu'))
+    model.add(Dense(64))
+    model.add(Activation('relu'))
     model.add(Dropout(0.5))
     model.add(Dense(5))
     model.add(Activation('softmax'))
