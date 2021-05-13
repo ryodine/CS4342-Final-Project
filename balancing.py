@@ -82,6 +82,7 @@ def balance(traincsv, target):
                     ids.append( (id,label) )
                     counts[label] += 1
     
+    shuffle(ids)
     outfile = "balanced_" + traincsv
     getcsv(ids, outfile)
     print(("Distribution for " + outfile + ": "), countlabels(outfile))
